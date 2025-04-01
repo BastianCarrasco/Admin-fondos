@@ -17,22 +17,13 @@ export default function Navbar({ onLogout }) {
             Ver Fechas
           </NavLink>
           
-          <NavLink to="/add-date" className={({ isActive }) => 
-            `navbar-item ${isActive ? 'is-active' : ''}`
-          }>
-            Agregar Fechas
-          </NavLink>
-          
-          <NavLink to="/delete-date" className={({ isActive }) => 
-            `navbar-item ${isActive ? 'is-active' : ''}`
-          }>
-            Eliminar Fechas
-          </NavLink>
+         
+        
           
           <NavLink to="/create-date" className={({ isActive }) => 
             `navbar-item ${isActive ? 'is-active' : ''}`
           }>
-            Crear Fechas
+            Agregar Fechas
           </NavLink>
           
           <NavLink to="/stats" className={({ isActive }) => 

@@ -4,25 +4,65 @@ export default function ViewDates() {
   const [fechas, setFechas] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [deleteModal, setDeleteModal] = useState({
+    isOpen: false,
+    convocatoriaId: null,
+    convocatoriaNombre: ''
+  });
 
   useEffect(() => {
-    const fetchFechas = async () => {
-      try {
-        const response = await fetch('https://backend-fechas.onrender.com/fechas');
-        if (!response.ok) {
-          throw new Error('Error al obtener las fechas');
-        }
-        const data = await response.json();
-        setFechas(data);
-      } catch (err) {
-        setError(err.message);
-      } finally {
-        setLoading(false);
-      }
-    };
-
     fetchFechas();
   }, []);
+
+  const fetchFechas = async () => {
+    try {
+      const response = await fetch('https://backend-fechas.onrender.com/fechas');
+      if (!response.ok) {
+        throw new Error('Error al obtener las fechas');
+      }
+      const data = await response.json();
+      setFechas(data);
+    } catch (err) {
+      setError(err.message);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const openDeleteModal = (id, nombre) => {
+    setDeleteModal({
+      isOpen: true,
+      convocatoriaId: id,
+      convocatoriaNombre: nombre
+    });
+  };
+
+  const closeDeleteModal = () => {
+    setDeleteModal({
+      isOpen: false,
+      convocatoriaId: null,
+      convocatoriaNombre: ''
+    });
+  };
+
+  const handleDelete = async () => {
+    try {
+      const response = await fetch(`https://backend-fechas.onrender.com/fechas/${deleteModal.convocatoriaId}`, {
+        method: 'DELETE'
+      });
+
+      if (!response.ok) {
+        throw new Error('Error al eliminar la convocatoria');
+      }
+
+      // Actualizar la lista de fechas después de eliminar
+      await fetchFechas();
+      closeDeleteModal();
+    } catch (err) {
+      setError(err.message);
+      closeDeleteModal();
+    }
+  };
 
   if (loading) {
     return (
@@ -53,6 +93,32 @@ export default function ViewDates() {
     <div className="box" style={{ backgroundColor: 'white', color: 'black' }}>
       <h2 className="title is-3 mb-5 has-text-centered" style={{ color: 'black' }}>Convocatorias Disponibles</h2>
       
+      {/* Modal de confirmación para eliminar */}
+      {deleteModal.isOpen && (
+        <div className="modal is-active">
+          <div className="modal-background"></div>
+          <div className="modal-card">
+            <header className="modal-card-head">
+              <p className="modal-card-title">Confirmar eliminación</p>
+              <button className="delete" aria-label="close" onClick={closeDeleteModal}></button>
+            </header>
+            <section className="modal-card-body">
+              ¿Estás seguro que deseas eliminar la convocatoria: <strong>{deleteModal.convocatoriaNombre}</strong>?
+              <br />
+              Esta acción no se puede deshacer.
+            </section>
+            <footer className="modal-card-foot">
+              <button className="button is-danger" onClick={handleDelete}>
+                Eliminar
+              </button>
+              <button className="button" onClick={closeDeleteModal}>
+                Cancelar
+              </button>
+            </footer>
+          </div>
+        </div>
+      )}
+
       {fechas.length === 0 ? (
         <div className="notification is-warning has-text-centered" style={{ backgroundColor: 'white', color: 'black' }}>
           No hay convocatorias registradas actualmente
@@ -92,8 +158,8 @@ export default function ViewDates() {
                       </span>
                     </div>
                     
-                    {/* Botón centrado */}
-                    <div className="has-text-centered">
+                    {/* Botones */}
+                    <div className="buttons is-centered">
                       <a 
                         href={convocatoria.url} 
                         target="_blank" 
@@ -101,11 +167,21 @@ export default function ViewDates() {
                         className="button is-small is-link is-outlined"
                         style={{ borderColor: '#3273dc', color: '#3273dc', backgroundColor: 'white' }}
                       >
-                        <span  className="icon">
+                        <span className="icon">
                           <i className="fas fa-external-link-alt"></i>
                         </span>
                         <span>Ver convocatoria</span>
                       </a>
+                      <button
+                        className="button is-small is-danger is-outlined"
+                        onClick={() => openDeleteModal(convocatoria.id, convocatoria.nombre)}
+                        style={{ borderColor: '#f14668', color: '#f14668' }}
+                      >
+                        <span className="icon">
+                          <i className="fas fa-trash-alt"></i>
+                        </span>
+                        <span>Eliminar</span>
+                      </button>
                     </div>
                   </div>
                 </div>
