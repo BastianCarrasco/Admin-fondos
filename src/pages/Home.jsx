@@ -58,7 +58,7 @@ export default function Home() {
                 <p>Añade nuevas fechas importantes a tu calendario.</p>
                 <button
                   className="button is-success is-outlined mt-3"
-                  onClick={() => navigate("/add-date")}
+                  onClick={() => navigate("/create-date")}
                 >
                   Ir a Agregar Fechas
                 </button>
