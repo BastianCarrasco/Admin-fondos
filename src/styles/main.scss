@@ -1,0 +1,39 @@
+// src/styles/main.scss
+@use './variables' as vars;
+@use 'bulma/bulma' with (
+  $scheme-main: vars.$scheme-main,
+  $scheme-invert: vars.$scheme-invert,
+  $text: vars.$text,
+  // ... otras variables que quieras sobreescribir
+);
+
+// Estilos globales adicionales
+body {
+  color: vars.$text;
+}
+
+// Asegura que todos los textos sean negros por defecto
+.title, .subtitle, .label, .help, .panel-heading {
+  color: vars.$text !important;
+}
+
+// Navbar personalizado
+.navbar {
+  &.is-primary {
+    background-color: bulma.$primary;
+    color: bulma.findColorInvert(bulma.$primary);
+    
+    .navbar-item, .navbar-link {
+      color: bulma.findColorInvert(bulma.$primary);
+      
+      &:hover {
+        background-color: color.adjust(bulma.$primary, $lightness: -5%);
+      }
+    }
+  }
+}
+
+// Cards con mejor contraste
+.card {
+  box-shadow: 0 2px 3px rgba(vars.$black, 0.1);
+}

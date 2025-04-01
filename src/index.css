@@ -1,0 +1,16 @@
+.app {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Ajuste para el navbar fijo */
+body {
+  padding-top: 3.25rem;
+  
+}
+
+/* Espaciado adicional */
+.box {
+  margin-bottom: 2rem;
+}
