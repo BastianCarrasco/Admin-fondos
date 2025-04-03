@@ -31,6 +31,11 @@ export default function Navbar({ onLogout }) {
           }>
             Estadísticas
           </NavLink>
+          <NavLink to="/edit-date" className={({ isActive }) => 
+            `navbar-item ${isActive ? 'is-active' : ''}`
+          }>
+            Editar Fechas
+          </NavLink>
         </div>
 
         <div className="navbar-end">

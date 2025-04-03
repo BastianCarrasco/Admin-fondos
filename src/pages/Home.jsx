@@ -66,6 +66,27 @@ export default function Home() {
             </div>
           </div>
         </div>
+        <div className="column is-one-third">
+          <div className="card has-text-centered">
+            <div className="card-content">
+              <div className="has-text-centered mb-4">
+                <span className="icon is-large has-text-success mb-2">
+                  <i className="fas fa-plus-circle fa-2x"></i>
+                </span>
+                <p className="title is-4">Editar Fechas</p>
+              </div>
+              <div className="content has-text-centered">
+                <p>Edita fechas importantes a tu calendario.</p>
+                <button style={{ borderColor: "white", color: "white" }} 
+                  className="button is-success is-outlined mt-3"
+                  onClick={() => navigate("/edit-date")}
+                >
+                  Ir a Editar Fechas
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
         {/* Tarjeta Estadísticas */}
         <div className="column is-one-third">
           <div className="card has-text-centered">

@@ -5,6 +5,7 @@ import Login from './components/auth/Login.jsx';
 import Home from './pages/Home';
 import ViewDates from './pages/Dates/ViewDates';
 import CreateDate from './pages/Dates/CreateDate'; // Asegúrate que esta importación sea correcta
+import EditarFechas from './pages/Dates/editarFechas.jsx';
 import 'bulma/css/bulma.min.css';
 import './App.css';
 
@@ -31,6 +32,7 @@ function App() {
           <Route path="/login" element={<Login setIsLoggedIn={handleLogin} />} />
           <Route path="/view-dates" element={isLoggedIn ? <ViewDates /> : <Navigate to="/login" />} />
           <Route path="/create-date" element={isLoggedIn ? <CreateDate /> : <Navigate to="/login" />} />
+          <Route path="/edit-date" element={isLoggedIn ? <EditarFechas /> : <Navigate to="/login" />} />
         </Routes>
       </div>
     </div>
